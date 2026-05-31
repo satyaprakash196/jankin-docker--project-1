@@ -1,26 +1,28 @@
-FROM  centos:latest
-MAINTAINER vikashashoke@gmail.com
-RUN yum install -y httpd \
- zip\
- unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
-WORKDIR /var/www/html/
-RUN unzip photogenic.zip
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic photogenic.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+FROM ubuntu:latest
+
+RUN apt update && \
+    apt install -y apache2 zip unzip && \
+    apt clean
+
+WORKDIR /var/www/html
+
+ADD https://freewebsitetemplates.com/download/space-science.zip /tmp/space-science.zip
+
+RUN unzip /tmp/space-science.zip -d /tmp && \
+    cp -r /tmp/space-science/* /var/www/html/ && \
+    rm -rf /tmp/space-science /tmp/space-science.zip
+
 EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]
  
  
-# FROM  centos:latest
-# MAINTAINER vikashashoke@gmail.com
-# RUN yum install -y httpd \
-#  zip\
-#  unzip
-# ADD https://www.free-css.com/assets/files/free-css-templates/download/page265/shine.zip /var/www/html/
+# FROM  ubuntu:latest
+# RUN apt update && \
+   # apt install -y apache2 zip unzip && \
+   # apt clean
+# ADD https://freewebsitetemplates.com/download/space-science.zip /tmp/space-science.zip /var/www/html/
 # WORKDIR /var/www/html/
-# RUN unzip shine.zip
-# RUN cp -rvf shine/* .
-# RUN rm -rf shine shine.zip
-# CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-# EXPOSE 80   
+ #unzip /tmp/space-science.zip -d /tmp && \
+    # cp -r /tmp/space-science/* /var/www/html/ && \
+    # rm -rf /tmp/space-science /tmp/space-science.zip  
